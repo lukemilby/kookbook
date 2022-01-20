@@ -1,0 +1,25 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample recipes API. You can find out more about\nthe API at https://github.com/PacktPublishing/BuildingDistributed-Applications-in-Gin.",
+    "title": "Recipes API",
+    "contact": {
+      "name": "Luke Milby",
+      "url": "http://lukemilby.com",
+      "email": "luke.milby@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "basePath": "/",
+  "paths": {}
+}
