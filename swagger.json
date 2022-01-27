@@ -21,5 +21,62 @@
   },
   "host": "localhost:5000",
   "basePath": "/",
-  "paths": {}
+  "paths": {
+    "/recipes": {
+      "get": {
+        "description": "Successful operation",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "operationId": "listRecipes"
+      }
+    },
+    "/recipes/search": {
+      "get": {
+        "description": "Successful operation",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "operationId": "searchRecipes",
+        "parameters": [
+          {
+            "name": "tag"
+          }
+        ]
+      }
+    },
+    "/recipes/{id}": {
+      "put": {
+        "description": "Invalid recipe ID",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "operationId": "updateRecipe",
+        "parameters": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "delete": {
+        "description": "Recipe not found",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "recipes"
+        ],
+        "operationId": "deleteRecipe"
+      }
+    }
+  }
 }
