@@ -19,7 +19,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"github.com/lukemilby/kookbook/handlers"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -71,6 +73,13 @@ var recipesHandler *handlers.RecipesHandler
 
 func init() {
 	ctx = context.Background()
+	redisClient := redis.NewClient(&redis.Options{
+		Addr: "10.10.1.102:6379",
+		Password: "",
+		DB: 0,
+	})
+	status := redisClient.Ping(ctx)
+	fmt.Println(status)
 	client, err := mongo.Connect(ctx,
 		options.Client().ApplyURI(os.Getenv("MONGO_URI")))
 	if err = client.Ping(context.TODO(),
