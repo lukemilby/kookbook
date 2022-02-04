@@ -74,7 +74,7 @@ var recipesHandler *handlers.RecipesHandler
 func init() {
 	ctx = context.Background()
 	redisClient := redis.NewClient(&redis.Options{
-		Addr: "10.10.1.102:6379",
+		Addr: "10.10.1.121:6379",
 		Password: "",
 		DB: 0,
 	})
@@ -88,7 +88,7 @@ func init() {
 	}
 	log.Println("Connected to MongoDB")
 	collection = client.Database(os.Getenv("MONGO_DATABASE")).Collection("recipes")
-	recipesHandler = handlers.NewRecipeHandler(ctx, collection)
+	recipesHandler = handlers.NewRecipeHandler(ctx, collection, redisClient)
 }
 
 func main() {
