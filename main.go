@@ -22,11 +22,13 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
+	"github.com/joho/godotenv"
 	"github.com/lukemilby/kookbook/handlers"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -65,6 +67,15 @@ import (
 //}
 
 
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.GetHeader("X-API-Key") != os.Getenv("X_API_KEY"){
+			c.AbortWithStatus(http.StatusUnauthorized)
+		}
+		c.Next()
+	}
+}
+
 var ctx context.Context
 var err error
 var client *mongo.Client
@@ -72,6 +83,19 @@ var collection *mongo.Collection
 var recipesHandler *handlers.RecipesHandler
 
 func init() {
+	// load env file
+	err := godotenv.Load()
+	/*
+	MONGO_URI | Connection and authentication | string | "mongodb://admin:password@10.10.1.121:27017/demo?authSource=admin"
+	MONGO_DATABASE | Database name |string | demo
+	X_API_KEY | API Key for middleware |string | adfes-wervgse-wf831
+	JWT_SECRET | Token used to sign claim | string | whatyouwanthere
+	*/
+
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	ctx = context.Background()
 	redisClient := redis.NewClient(&redis.Options{
 		Addr: "10.10.1.121:6379",
